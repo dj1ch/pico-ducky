@@ -46,9 +46,23 @@ duckyCommands = {
     'F4': Keycode.F4, 'F5': Keycode.F5, 'F6': Keycode.F6, 'F7': Keycode.F7,
     'F8': Keycode.F8, 'F9': Keycode.F9, 'F10': Keycode.F10, 'F11': Keycode.F11,
     'F12': Keycode.F12,
-    'MOUSE': #put the needed stuff here
-
+    'MOUSE': {'action': 'MOVE', 'x': 0, 'y': 0, 'z': 0},
 }
+
+# ex: "MOUSE MOVE -100 0 0" moves the mouse 100 pixels left.
+
+def runMouseCommand(command):
+    action = command['action']
+    if action == 'MOVE':
+        mouseX = command['x']
+        mouseY = command['y']
+        mouseZ = command['z']
+        mouse.move(x=mouseX, y=mouseY, z=mouseZ)
+    elif action == 'CLICK':
+        mouse.click()
+    elif action == 'RIGHT_CLICK':
+        mouse.right_click()
+
 def convertLine(line):
     newline = []
     # print(line)
