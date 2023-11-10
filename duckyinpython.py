@@ -50,7 +50,8 @@ duckyCommands = {
 }
 
 # ex: "MOUSE MOVE -100 0 0" moves the mouse 100 pixels left.
-
+# for clicking: "MOUSE <insert click type here>"
+# there is either: "CLICK", "MIDDLE_CLICK", or "RIGHT_CLICK"
 def runMouseCommand(command):
     action = command['action']
     if action == 'MOVE':
@@ -62,6 +63,8 @@ def runMouseCommand(command):
         mouse.click()
     elif action == 'RIGHT_CLICK':
         mouse.right_click()
+    elif action == 'MIDDLE_CLICK':
+        mouse.middle_click()
 
 def convertLine(line):
     newline = []
