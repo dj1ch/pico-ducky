@@ -17,7 +17,7 @@
 <br />
 
 ## Quick Start Guide
-Install and have your USB Rubber Ducky working in less than 5 minutes.
+Install and have your USB Rubber Ducky working in less than 5 minutes. This fork of the rubber ducky has mouse clicking and moving support as well.
 
 1. Download the latest release from the [Releases](https://github.com/dbisu/pico-ducky/releases) page.
 
