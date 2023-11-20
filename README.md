@@ -17,9 +17,9 @@
 <br />
 
 ## Quick Start Guide
-Install and have your USB Rubber Ducky working in less than 5 minutes. This fork of the rubber ducky has mouse clicking and moving support as well(hopefully). I am still testing at the moment
+Install and have your USB Rubber Ducky working in less than 5 minutes. This fork of the rubber ducky has mouse clicking and moving support as well(hopefully).
 
-1. Download the latest release from the [Releases](https://github.com/dj1ch/pico-ducky/releases) page, although there are no releases so stay tuned
+1. Download the latest release from the [Releases](https://github.com/dj1ch/pico-ducky/releases) page
 
 2. Plug the device into a USB port while holding the boot button. It will show up as a removable media device named RPI-RP2.
 
