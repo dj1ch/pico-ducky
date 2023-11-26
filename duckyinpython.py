@@ -15,6 +15,9 @@ import usb_hid
 from adafruit_hid.keyboard import Keyboard
 from adafruit_hid.mouse import Mouse
 
+# instance of mouse
+mouse = Mouse(usb_hid.devices)
+
 # comment out these lines for non_US keyboards
 from adafruit_hid.keyboard_layout_us import KeyboardLayoutUS as KeyboardLayout
 from adafruit_hid.keycode import Keycode
