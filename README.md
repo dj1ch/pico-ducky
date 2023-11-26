@@ -7,11 +7,11 @@
 <br />
 
 <div align="center">
-  <img alt="GitHub code size in bytes" src="https://img.shields.io/github/languages/code-size/dbisu/pico-ducky">
-  <img alt="GitHub license" src="https://img.shields.io/github/license/dbisu/pico-ducky">
-  <a href="https://github.com/dbisu/pico-ducky/graphs/contributors"><img alt="GitHub contributors" src="https://img.shields.io/github/contributors/dbisu/pico-ducky"></a>
-  <img alt="GitHub commit activity" src="https://img.shields.io/github/commit-activity/m/dbisu/pico-ducky">
-  <img alt="GitHub Repo stars" src="https://img.shields.io/github/stars/dbisu/pico-ducky">
+  <img alt="GitHub code size in bytes" src="https://img.shields.io/github/languages/code-size/dj1ch/pico-ducky">
+  <img alt="GitHub license" src="https://img.shields.io/github/license/dj1ch/pico-ducky">
+  <a href="https://github.com/dj1ch/pico-ducky/graphs/contributors"><img alt="GitHub contributors" src="https://img.shields.io/github/contributors/dj1ch/pico-ducky"></a>
+  <img alt="GitHub commit activity" src="https://img.shields.io/github/commit-activity/m/dj1ch/pico-ducky">
+  <img alt="GitHub Repo stars" src="https://img.shields.io/github/stars/dj1ch/pico-ducky">
 </div>
 
 <br />
@@ -178,7 +178,7 @@ https://www.neradoc.me/layouts/
 #### Now you have a zip file
 
 #### Find your language/layout in the lib directory
-
+**Note that I only provided support for my langauge and keyboard! You might have to add your langauge yourself! When in doubt, [google it](https://google.com)**
 For a language `LANG`, copy the following files from the zip's `lib` folder to the `lib` directory of the board.  
 **DO NOT** modify the adafruit_hid directory. Your files go directly in `lib`.  
 **DO NOT** change the names or extensions of the files. Just pick the right ones.  
