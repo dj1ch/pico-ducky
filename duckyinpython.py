@@ -58,9 +58,9 @@ duckyCommands = {
 def runMouseCommand(command):
     action = command['action']
     if action == 'MOVE':
-        mouseX = command['x']
-        mouseY = command['y']
-        mouseZ = command['z']
+        mouseX = int(command['x'])
+        mouseY = int(command['y'])
+        mouseZ = int(command['z'])
         mouse.move(x=mouseX, y=mouseY, z=mouseZ)
     elif action == 'CLICK':
         mouse.click()
