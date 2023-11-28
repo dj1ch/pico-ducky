@@ -48,8 +48,9 @@ duckyCommands = {
     'Z': Keycode.Z, 'F1': Keycode.F1, 'F2': Keycode.F2, 'F3': Keycode.F3,
     'F4': Keycode.F4, 'F5': Keycode.F5, 'F6': Keycode.F6, 'F7': Keycode.F7,
     'F8': Keycode.F8, 'F9': Keycode.F9, 'F10': Keycode.F10, 'F11': Keycode.F11,
-    'F12': Keycode.F12,
-    'MOUSE': {'action': 'MOVE', 'x': 0, 'y': 0, 'z': 0},
+    'F12': Keycode.F12, 'MOUSE': {'action': 'MOVE', 'x': 0, 'y': 0, 'z': 0},
+    'CLICK': {'action': 'CLICK'}, 'RIGHT_CLICK': {'action': 'RIGHT_CLICK'},
+    'MIDDLE_CLICK': {'action': 'MIDDLE_CLICK'},
 }
 
 # ex: "MOUSE MOVE -100 0 0" moves the mouse 100 pixels left.
