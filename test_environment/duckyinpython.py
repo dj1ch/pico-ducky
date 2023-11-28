@@ -285,3 +285,29 @@ async def monitor_buttons(button1):
             button1Down = False
 
         await asyncio.sleep(0)
+
+def testMouseCommands():
+    # test mouse movement
+    move_command = {'action': 'MOVE', 'x': 100, 'y': 50, 'z': 0}
+    print("Testing MOUSE MOVE command:")
+    print("Before move:", mouse.position())
+    runMouseCommand(move_command)
+    print("After move:", mouse.position())
+    print()
+
+    # test clicking
+    click_command = {'action': 'CLICK'}
+    print("Testing MOUSE CLICK command:")
+    runMouseCommand(click_command)
+    print()
+
+def testPayloadExecution():
+    # test payload, although this is not needed
+    sample_payload = "sample_payload.dd"
+    print(f"Testing payload execution: {sample_payload}")
+    runScript(sample_payload)
+    print("Payload execution complete")
+
+# uncomment to run these tests
+testMouseCommands()
+# testPayloadExecution()
