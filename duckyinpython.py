@@ -61,14 +61,13 @@ def runMouseCommand(command):
     if action == 'MOVE':
         mouseX = int(command['x'])
         mouseY = int(command['y'])
-        mouseZ = int(command['z'])
-        mouse.move(x=mouseX, y=mouseY, z=mouseZ)
+        mouse.move(x=mouseX, y=mouseY)
     elif action == 'CLICK':
-        mouse.click()
+        mouse.click(mouse.LEFT_BUTTON)
     elif action == 'RIGHT_CLICK':
-        mouse.right_click()
+        mouse.click(mouse.RIGHT_BUTTON)
     elif action == 'MIDDLE_CLICK':
-        mouse.middle_click()
+        mouse.click(mouse.MIDDLE_BUTTON)
 
 def convertLine(line):
     newline = []

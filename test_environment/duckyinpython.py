@@ -53,7 +53,7 @@ duckyCommands = {
     'MIDDLE_CLICK': {'action': 'MIDDLE_CLICK'},
 }
 
-# ex: "MOUSE MOVE -100 0 0" moves the mouse 100 pixels left.
+# ex: "MOUSE MOVE -100 0" moves the mouse 100 pixels left.
 # for clicking: "MOUSE <insert click type here>"
 # there is either: "CLICK", "MIDDLE_CLICK", or "RIGHT_CLICK"
 def runMouseCommand(command):
@@ -61,14 +61,13 @@ def runMouseCommand(command):
     if action == 'MOVE':
         mouseX = int(command['x'])
         mouseY = int(command['y'])
-        mouseZ = int(command['z'])
-        mouse.move(x=mouseX, y=mouseY, z=mouseZ)
+        mouse.move(x=mouseX, y=mouseY)
     elif action == 'CLICK':
-        mouse.click()
+        mouse.click(mouse.LEFT_BUTTON)
     elif action == 'RIGHT_CLICK':
-        mouse.right_click()
+        mouse.click(mouse.RIGHT_BUTTON)
     elif action == 'MIDDLE_CLICK':
-        mouse.middle_click()
+        mouse.click(mouse.MIDDLE_BUTTON)
 
 def convertLine(line):
     newline = []
@@ -288,18 +287,16 @@ async def monitor_buttons(button1):
 
 def testMouseCommands():
     # test mouse movement
-    move_command = {'action': 'MOVE', 'x': 100, 'y': 50, 'z': 0}
+    move_command = {'action': 'MOVE', 'x': 100, 'y': 50,}
     print("Testing MOUSE MOVE command:")
-    print("Before move:", mouse.position())
     runMouseCommand(move_command)
-    print("After move:", mouse.position())
-    print()
+    print("Finished!")
 
     # test clicking
-    click_command = {'action': 'CLICK'}
+    click_command = {'action': 'RIGHT_CLICK'}
     print("Testing MOUSE CLICK command:")
     runMouseCommand(click_command)
-    print()
+    print("Finished!")
 
 def testPayloadExecution():
     # test payload, although this is not needed
