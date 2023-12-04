@@ -91,7 +91,10 @@ def convertLine(line):
 
 def runScriptLine(line):
     for k in line:
-        kbd.press(k)
+        if isinstance(k, dict):
+            runMouseCommand(k)
+        else:
+            kbd.press(k)
     kbd.release_all()
 
 def sendString(line):
@@ -300,7 +303,7 @@ def testMouseCommands():
 
 def testPayloadExecution():
     # define a string for testing movements
-    ducky_script = """MOUSE MOVE 100 100"""
+    ducky_script = """RIGHT_CLICK"""
 
     # run script
     for line in ducky_script.splitlines():

@@ -91,7 +91,10 @@ def convertLine(line):
 
 def runScriptLine(line):
     for k in line:
-        kbd.press(k)
+        if isinstance(k, dict):
+            runMouseCommand(k)
+        else:
+            kbd.press(k)
     kbd.release_all()
 
 def sendString(line):
