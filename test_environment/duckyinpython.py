@@ -299,12 +299,24 @@ def testMouseCommands():
     print("Finished!")
 
 def testPayloadExecution():
-    # test payload, although this is not needed
-    sample_payload = "sample_payload.dd"
-    print(f"Testing payload execution: {sample_payload}")
-    runScript(sample_payload)
+    # define a string for testing movements
+    ducky_script = """MOUSE MOVE 100 100"""
+
+    # run script
+    for line in ducky_script.splitlines():
+        if line.startswith("MOUSE"):
+            mouse_command = {'action': '', 'x': 0, 'y': 0}
+            words = line.split()
+            mouse_command['action'] = words[1]
+            if mouse_command['action'] == 'MOVE' and len(words) == 4:
+                mouse_command['x'] = int(words[2])
+                mouse_command['y'] = int(words[3])
+            runMouseCommand(mouse_command)
+        else:
+            parseLine(line)
+
     print("Payload execution complete")
 
 # uncomment to run these tests
-testMouseCommands()
-# testPayloadExecution()
+# testMouseCommands()
+testPayloadExecution()
