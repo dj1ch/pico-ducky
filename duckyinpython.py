@@ -102,29 +102,38 @@ def sendString(line):
 
 def parseLine(line):
     global defaultDelay
-    if(line[0:3] == "REM"):
+
+    if line.startswith("REM"):
         # ignore ducky script comments
         pass
-    elif(line[0:5] == "DELAY"):
-        time.sleep(float(line[6:])/1000)
-    elif(line[0:6] == "STRING"):
+    elif line.startswith("DELAY"):
+        time.sleep(float(line[6:]) / 1000)
+    elif line.startswith("STRING"):
         sendString(line[7:])
-    elif(line[0:5] == "PRINT"):
+    elif line.startswith("PRINT"):
         print("[SCRIPT]: " + line[6:])
-    elif(line[0:6] == "IMPORT"):
+    elif line.startswith("IMPORT"):
         runScript(line[7:])
-    elif(line[0:13] == "DEFAULT_DELAY"):
+    elif line.startswith("DEFAULT_DELAY"):
         defaultDelay = int(line[14:]) * 10
-    elif(line[0:12] == "DEFAULTDELAY"):
+    elif line.startswith("DEFAULTDELAY"):
         defaultDelay = int(line[13:]) * 10
-    elif(line[0:3] == "LED"):
-        if(led.value == True):
-            led.value = False
-        else:
-            led.value = True
+    elif line.startswith("LED"):
+        led.value = not led.value
+    elif line.startswith("MOUSE"):
+        mouse_command = {'action': '', 'x': 0, 'y': 0}
+        words = line.split()
+        mouse_command['action'] = words[1]
+        if mouse_command['action'] == 'MOVE' and len(words) == 4:
+            mouse_command['x'] = int(words[2])
+            mouse_command['y'] = int(words[3])
+        runMouseCommand(mouse_command)
     else:
         newScriptLine = convertLine(line)
         runScriptLine(newScriptLine)
+
+kbd = Keyboard(usb_hid.devices)
+layout = KeyboardLayout(kbd)
 
 kbd = Keyboard(usb_hid.devices)
 layout = KeyboardLayout(kbd)
