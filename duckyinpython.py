@@ -53,14 +53,14 @@ duckyCommands = {
     'MIDDLE_CLICK': {'action': 'MIDDLE_CLICK'},
 }
 
-# ex: "MOUSE MOVE -100 0 0" moves the mouse 100 pixels left.
+# ex: "MOUSE MOVE -100 0" moves the mouse 100 pixels left.
 # for clicking: "MOUSE <insert click type here>"
 # there is either: "CLICK", "MIDDLE_CLICK", or "RIGHT_CLICK"
 def runMouseCommand(command):
     action = command['action']
     if action == 'MOVE':
-        mouseX = int(command['x'])
-        mouseY = int(command['y'])
+        mouseX = int(command.get('x', 0))
+        mouseY = int(command.get('y', 0))
         mouse.move(x=mouseX, y=mouseY)
     elif action == 'CLICK':
         mouse.click(mouse.LEFT_BUTTON)
@@ -71,64 +71,91 @@ def runMouseCommand(command):
 
 def convertLine(line):
     newline = []
-    # print(line)
+
     # loop on each key - the filter removes empty values
     for key in filter(None, line.split(" ")):
         key = key.upper()
-        # find the keycode for the command in the list
-        command_keycode = duckyCommands.get(key, None)
-        if command_keycode is not None:
-            # if it exists in the list, use it
-            newline.append(command_keycode)
-        elif hasattr(Keycode, key):
-            # if it's in the Keycode module, use it (allows any valid keycode)
-            newline.append(getattr(Keycode, key))
+
+        # Check if the key is a mouse command
+        if key == 'MOUSE':
+            mouse_command = {'action': ''}
+            continue  # Skip the "MOUSE" keyword
+        elif key in {'MOVE', 'CLICK', 'RIGHT_CLICK', 'MIDDLE_CLICK'}:
+            mouse_command['action'] = key
+            # If it's a MOVE command, add the coordinates
+            if key == 'MOVE':
+                if len(newline) >= 2:
+                    try:
+                        mouse_command['x'] = int(newline[-2])
+                        mouse_command['y'] = int(newline[-1])
+                        runMouseCommand(mouse_command)
+                        continue
+                    except ValueError:
+                        print(f"Invalid MOUSE MOVE command: Invalid coordinates - {newline[-2]} {newline[-1]}")
+                        continue
+            # Handle other mouse commands here
+            elif key == 'CLICK':
+                mouse_command['action'] = 'CLICK'
+                runMouseCommand(mouse_command)
+            elif key == 'RIGHT_CLICK':
+                mouse_command['action'] = 'RIGHT_CLICK'
+                runMouseCommand(mouse_command)
+            elif key == 'MIDDLE_CLICK':
+                mouse_command['action'] = 'MIDDLE_CLICK'
+                runMouseCommand(mouse_command)
         else:
-            # if it's not a known key name, show the error for diagnosis
-            print(f"Unknown key: <{key}>")
-    # print(newline)
+            # find the keycode for the command in the list
+            command_keycode = duckyCommands.get(key, None)
+            if command_keycode is not None:
+                # if it exists in the list, use it
+                newline.append(command_keycode)
+            elif hasattr(Keycode, key):
+                # if it's in the Keycode module, use it (allows any valid keycode)
+                newline.append(getattr(Keycode, key))
+            else:
+                # if it's not a known key name, show the error for diagnosis
+                print(f"Unknown key: <{key}>")
+
     return newline
 
 def runScriptLine(line):
-    for k in line:
-        kbd.press(k)
-    kbd.release_all()
+    if 'MOUSE' in line:
+        convertLine(line)
+    else:
+        for k in line:
+            kbd.press(k)
+        kbd.release_all()
 
 def sendString(line):
     layout.write(line)
 
 def parseLine(line):
     global defaultDelay
-    if(line[0:3] == "REM"):
-        # ignore ducky script comments
+
+    if line.startswith("REM"):
+        # Ignore ducky script comments
         pass
-    elif(line[0:5] == "DELAY"):
-        time.sleep(float(line[6:])/1000)
-    elif(line[0:6] == "STRING"):
+    elif line.startswith("DELAY"):
+        time.sleep(float(line[6:]) / 1000)
+    elif line.startswith("STRING"):
         sendString(line[7:])
-    elif(line[0:5] == "PRINT"):
+    elif line.startswith("PRINT"):
         print("[SCRIPT]: " + line[6:])
-    elif(line[0:6] == "IMPORT"):
+    elif line.startswith("IMPORT"):
         runScript(line[7:])
-    elif(line[0:13] == "DEFAULT_DELAY"):
+    elif line.startswith("DEFAULT_DELAY"):
         defaultDelay = int(line[14:]) * 10
-    elif(line[0:12] == "DEFAULTDELAY"):
+    elif line.startswith("DEFAULTDELAY"):
         defaultDelay = int(line[13:]) * 10
-    elif(line[0:3] == "LED"):
-        if(led.value == True):
+    elif line.startswith("LED"):
+        if led.value:
             led.value = False
         else:
             led.value = True
     else:
         newScriptLine = convertLine(line)
         runScriptLine(newScriptLine)
-
-kbd = Keyboard(usb_hid.devices)
-layout = KeyboardLayout(kbd)
-
-
-
-
+        
 #init button
 button1_pin = DigitalInOut(GP22) # defaults to input
 button1_pin.pull = Pull.UP      # turn on internal pull-up resistor
