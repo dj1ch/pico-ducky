@@ -119,12 +119,21 @@ def convertLine(line):
     return newline
 
 def runScriptLine(line):
+<<<<<<< HEAD
     if 'MOUSE' in line:
         convertLine(line)
     else:
         for k in line:
             kbd.press(k)
         kbd.release_all()
+=======
+    for k in line:
+        if isinstance(k, dict):
+            runMouseCommand(k)
+        else:
+            kbd.press(k)
+    kbd.release_all()
+>>>>>>> 5ebbf54137b50707030f1ee6aaaecac1d0640317
 
 def sendString(line):
     layout.write(line)
@@ -133,7 +142,11 @@ def parseLine(line):
     global defaultDelay
 
     if line.startswith("REM"):
+<<<<<<< HEAD
         # Ignore ducky script comments
+=======
+        # ignore ducky script comments
+>>>>>>> 5ebbf54137b50707030f1ee6aaaecac1d0640317
         pass
     elif line.startswith("DELAY"):
         time.sleep(float(line[6:]) / 1000)
@@ -148,6 +161,7 @@ def parseLine(line):
     elif line.startswith("DEFAULTDELAY"):
         defaultDelay = int(line[13:]) * 10
     elif line.startswith("LED"):
+<<<<<<< HEAD
         if led.value:
             led.value = False
         else:
@@ -156,6 +170,30 @@ def parseLine(line):
         newScriptLine = convertLine(line)
         runScriptLine(newScriptLine)
         
+=======
+        led.value = not led.value
+    elif line.startswith("MOUSE"):
+        mouse_command = {'action': '', 'x': 0, 'y': 0}
+        words = line.split()
+        mouse_command['action'] = words[1]
+        if mouse_command['action'] == 'MOVE' and len(words) == 4:
+            mouse_command['x'] = int(words[2])
+            mouse_command['y'] = int(words[3])
+        runMouseCommand(mouse_command)
+    else:
+        newScriptLine = convertLine(line)
+        runScriptLine(newScriptLine)
+
+kbd = Keyboard(usb_hid.devices)
+layout = KeyboardLayout(kbd)
+
+kbd = Keyboard(usb_hid.devices)
+layout = KeyboardLayout(kbd)
+
+
+
+
+>>>>>>> 5ebbf54137b50707030f1ee6aaaecac1d0640317
 #init button
 button1_pin = DigitalInOut(GP22) # defaults to input
 button1_pin.pull = Pull.UP      # turn on internal pull-up resistor

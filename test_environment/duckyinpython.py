@@ -119,21 +119,17 @@ def convertLine(line):
     return newline
 
 def runScriptLine(line):
-    if 'MOUSE' in line:
-        convertLine(line)
-    else:
-        for k in line:
-            kbd.press(k)
-        kbd.release_all()
+    for k in line:
+        kbd.press(k)
+    kbd.release_all()
 
 def sendString(line):
     layout.write(line)
 
 def parseLine(line):
     global defaultDelay
-
-    if line.startswith("REM"):
-        # Ignore ducky script comments
+    if(line[0:3] == "REM"):
+        # ignore ducky script comments
         pass
     elif line.startswith("DELAY"):
         time.sleep(float(line[6:]) / 1000)
@@ -147,8 +143,8 @@ def parseLine(line):
         defaultDelay = int(line[14:]) * 10
     elif line.startswith("DEFAULTDELAY"):
         defaultDelay = int(line[13:]) * 10
-    elif line.startswith("LED"):
-        if led.value:
+    elif(line[0:3] == "LED"):
+        if(led.value == True):
             led.value = False
         else:
             led.value = True
@@ -325,30 +321,13 @@ def testMouseCommands():
     runMouseCommand(click_command)
     print("Finished!")
 
-def testPayloadExecution(test_mode=False):
-    # Define a Ducky Script as a string for testing
-    ducky_script = """MOUSE MOVE 100 100"""
-
-    # Run the Ducky Script in test mode if test_mode is True
-    if test_mode:
-        for line in ducky_script.splitlines():
-            if line.startswith("MOUSE"):
-                mouse_command = {'action': '', 'x': 0, 'y': 0}
-                words = line.split()
-                mouse_command['action'] = words[1]
-                if mouse_command['action'] == 'MOVE' and len(words) == 4:
-                    mouse_command['x'] = int(words[2])
-                    mouse_command['y'] = int(words[3])
-                    runMouseCommand(mouse_command)
-            else:
-                parseLine(line)
-    else:
-        # Run the Ducky Script without test mode
-        for line in ducky_script.splitlines():
-            parseLine(line)
-
-# Run the modified testPayloadExecution function with test_mode=True
-testPayloadExecution(test_mode=True)
+def testPayloadExecution():
+    # test payload, although this is not needed
+    sample_payload = "sample_payload.dd"
+    print(f"Testing payload execution: {sample_payload}")
+    runScript(sample_payload)
+    print("Payload execution complete")
 
 # uncomment to run these tests
-#testMouseCommands()
+testMouseCommands()
+# testPayloadExecution()

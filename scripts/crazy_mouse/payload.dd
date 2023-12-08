@@ -1,0 +1,19 @@
+REM This will move the mouse and click things randomly.
+REM Note that most screens are 1920x1080 pixels,
+REM so keep the amount of pixels under that number for a big effect
+
+MOUSE MOVE -1000 35
+CLICK
+MOUSE MOVE 1500 -200
+RIGHT_CLICK
+MOUSE MOVE -500 600
+MIDDLE_CLICK
+MOUSE MOVE 100 100
+CLICK
+RIGHT_CLICK
+MIDDLE_CLICK
+MOUSE MOVE 1000 -1000
+MOUSE MOVE -100 450
+MOUSE MOVE 250 -1000
+MOUSE MOVE 1900 -1000
+MOUSE MOVE -1500 1000

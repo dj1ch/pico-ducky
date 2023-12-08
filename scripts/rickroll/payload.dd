@@ -1,0 +1,15 @@
+REM Super simple rickroll, made by @dj1ch on github
+
+GUI
+STRING google chrome
+DElAY 250
+ENTER
+DELAY 5000
+CLICK
+DELAY 250
+CTRL t
+DELAY 250
+STRING https://www.youtube.com/watch?v=dQw4w9WgXcQ
+ENTER
+
+REM Script ends here
