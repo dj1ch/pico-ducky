@@ -1,0 +1,14 @@
+REM This will poweroff a raspberry pi/pwnagotchi
+REM Replace these next string 2 commands with your username and password
+DELAY 250
+STRING pi
+DELAY 250
+ENTER
+DELAY 250
+STRING raspberry
+DELAY 250
+ENTER
+DELAY 2500
+STRING sudo reboot
+DELAY 250
+ENTER
