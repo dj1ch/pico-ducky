@@ -22,6 +22,10 @@ mouse = Mouse(usb_hid.devices)
 from adafruit_hid.keyboard_layout_us import KeyboardLayoutUS as KeyboardLayout
 from adafruit_hid.keycode import Keycode
 
+# define keyboard(accidentally deleted)
+kbd = Keyboard(usb_hid.devices)
+layout = KeyboardLayout(kbd)
+
 # uncomment these lines for non_US keyboards
 # replace LANG with appropriate language
 #from keyboard_layout_win_LANG import KeyboardLayout
@@ -120,8 +124,11 @@ def convertLine(line):
 
 def runScriptLine(line):
     for k in line:
-        kbd.press(k)
-    kbd.release_all()
+        if isinstance(k, dict):
+            runMouseCommand(k)
+        else:
+            kbd.press(k)
+            kbd.release_all()
 
 def sendString(line):
     layout.write(line)
@@ -321,13 +328,28 @@ def testMouseCommands():
     runMouseCommand(click_command)
     print("Finished!")
 
-def testPayloadExecution():
-    # test payload, although this is not needed
-    sample_payload = "sample_payload.dd"
-    print(f"Testing payload execution: {sample_payload}")
-    runScript(sample_payload)
-    print("Payload execution complete")
+def testPayloadExecution(layout, test_mode=False):
+    # Define a Ducky Script as a string for testing
+    ducky_script = """STRING testing"""
+
+    # Run the Ducky Script in test mode if test_mode is True
+    if test_mode:
+        for line in ducky_script.splitlines():
+            if line.startswith("MOUSE"):
+                mouse_command = {'action': '', 'x': 0, 'y': 0}
+                words = line.split()
+                mouse_command['action'] = words[1]
+                if mouse_command['action'] == 'MOVE' and len(words) == 4:
+                    mouse_command['x'] = int(words[2])
+                    mouse_command['y'] = int(words[3])
+                    runMouseCommand(mouse_command)
+            else:
+                parseLine(line)
+    else:
+        # Run the Ducky Script without test mode
+        for line in ducky_script.splitlines():
+            parseLine(line)
 
 # uncomment to run these tests
-testMouseCommands()
-# testPayloadExecution()
+# testMouseCommands()
+testPayloadExecution(layout, test_mode=True)
