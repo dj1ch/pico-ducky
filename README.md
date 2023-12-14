@@ -18,7 +18,7 @@
 
 ## Quick Start Guide
 
-**Mouse commands may not work correctly right now. Please don't use any as they will not work at all.**
+**Mouse commands may not work correctly right now. Please don't use any as they will not work at all. The next release will help fix this. In the latest release(2.1.1), mouse clicking is supported.**
 
 Install and have your USB Rubber Ducky working in less than 5 minutes. This fork of the rubber ducky has mouse clicking and moving support as well(hopefully).
 
