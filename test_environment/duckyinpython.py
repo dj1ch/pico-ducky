@@ -75,18 +75,19 @@ def runMouseCommand(command):
 
 def convertLine(line):
     newline = []
+    mouse_command = {'action': ''}
 
     # loop on each key - the filter removes empty values
     for key in filter(None, line.split(" ")):
         key = key.upper()
 
-        # Check if the key is a mouse command
+        # MOUSE command check
         if key == 'MOUSE':
-            mouse_command = {'action': ''}
-            continue  # Skip the "MOUSE" keyword
+            mouse_command['action'] = ''
+            continue  # continue with MOUSE command
         elif key in {'MOVE', 'CLICK', 'RIGHT_CLICK', 'MIDDLE_CLICK'}:
             mouse_command['action'] = key
-            # If it's a MOVE command, add the coordinates
+            # add coords to MOVE command
             if key == 'MOVE':
                 if len(newline) >= 2:
                     try:
@@ -97,7 +98,7 @@ def convertLine(line):
                     except ValueError:
                         print(f"Invalid MOUSE MOVE command: Invalid coordinates - {newline[-2]} {newline[-1]}")
                         continue
-            # Handle other mouse commands here
+            # handle other mouse commands here
             elif key == 'CLICK':
                 mouse_command['action'] = 'CLICK'
                 runMouseCommand(mouse_command)
@@ -135,7 +136,9 @@ def sendString(line):
 
 def parseLine(line):
     global defaultDelay
-    if(line[0:3] == "REM"):
+    mouse_command = {'action': '', 'x': 0, 'y': 0}
+
+    if line.startswith("REM"):
         # ignore ducky script comments
         pass
     elif line.startswith("DELAY"):
@@ -146,18 +149,25 @@ def parseLine(line):
         print("[SCRIPT]: " + line[6:])
     elif line.startswith("IMPORT"):
         runScript(line[7:])
-    elif line.startswith("DEFAULT_DELAY"):
-        defaultDelay = int(line[14:]) * 10
-    elif line.startswith("DEFAULTDELAY"):
-        defaultDelay = int(line[13:]) * 10
-    elif(line[0:3] == "LED"):
-        if(led.value == True):
+    elif line.startswith("DEFAULT_DELAY") or line.startswith("DEFAULTDELAY"):
+        defaultDelay = int(line.split()[-1]) * 10
+    elif line.startswith("LED"):
+        if led.value:
             led.value = False
         else:
             led.value = True
+    elif line.startswith("MOUSE"):
+        words = line.split()
+        mouse_command['action'] = words[1]
+        if mouse_command['action'] == 'MOVE' and len(words) == 4:
+            mouse_command['x'] = int(words[2])
+            mouse_command['y'] = int(words[3])
+            runMouseCommand(mouse_command)
     else:
         newScriptLine = convertLine(line)
         runScriptLine(newScriptLine)
+
+    time.sleep(float(defaultDelay) / 1000)
         
 #init button
 button1_pin = DigitalInOut(GP22) # defaults to input
@@ -315,41 +325,30 @@ async def monitor_buttons(button1):
 
         await asyncio.sleep(0)
 
+# this is already known to work, 
+# although the mouse movement issue may lie 
+# in the implementation of the move command here 
+# vs how it is implemented in the duckyinpython.py on the usb rubber ducky
 def testMouseCommands():
     # test mouse movement
     move_command = {'action': 'MOVE', 'x': 100, 'y': 50,}
-    print("Testing MOUSE MOVE command:")
+    print("Testing 'MOUSE MOVE' command:")
     runMouseCommand(move_command)
     print("Finished!")
 
     # test clicking
     click_command = {'action': 'RIGHT_CLICK'}
-    print("Testing MOUSE CLICK command:")
+    print("Testing 'MOUSE CLICK' command:")
     runMouseCommand(click_command)
     print("Finished!")
 
-def testPayloadExecution(layout, test_mode=False):
-    # Define a Ducky Script as a string for testing
-    ducky_script = """STRING testing"""
+def testPayloadExecution(layout):
+    # define a ducky script string for testing
+    ducky_script = """MOUSE MOVE 100 100"""
 
-    # Run the Ducky Script in test mode if test_mode is True
-    if test_mode:
-        for line in ducky_script.splitlines():
-            if line.startswith("MOUSE"):
-                mouse_command = {'action': '', 'x': 0, 'y': 0}
-                words = line.split()
-                mouse_command['action'] = words[1]
-                if mouse_command['action'] == 'MOVE' and len(words) == 4:
-                    mouse_command['x'] = int(words[2])
-                    mouse_command['y'] = int(words[3])
-                    runMouseCommand(mouse_command)
-            else:
-                parseLine(line)
-    else:
-        # Run the Ducky Script without test mode
-        for line in ducky_script.splitlines():
-            parseLine(line)
+    for line in ducky_script.splitlines():
+        parseLine(line)
 
 # uncomment to run these tests
-# testMouseCommands()
-testPayloadExecution(layout, test_mode=True)
+testPayloadExecution(layout)
+
