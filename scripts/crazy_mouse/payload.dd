@@ -1,3 +1,6 @@
+REM VERSION: 1.0 
+REM AUTHOR: dj1ch
+
 REM This will move the mouse and click things randomly.
 REM Note that most screens are 1920x1080 pixels,
 REM so keep the amount of pixels under that number for a big effect

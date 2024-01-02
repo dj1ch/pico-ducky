@@ -1,4 +1,8 @@
+REM VERSION: 1.0 
+REM AUTHOR: dj1ch
+
 REM Super simple rickroll, made by @dj1ch on github
+REM Note that google chrome must be installed on the machine
 
 GUI
 STRING google chrome
