@@ -18,23 +18,21 @@
 
 ## Quick Start Guide
 
-**Mouse commands may not work correctly right now. Please don't use any as they will not work at all. The next release will help fix this. In the latest release(2.1.1), mouse clicking is supported.**
-
 Install and have your USB Rubber Ducky working in less than 5 minutes. This fork of the rubber ducky has mouse clicking and moving support as well(hopefully).
 
 1. Download the latest release from the [Releases](https://github.com/dj1ch/pico-ducky/releases) page
 
 2. Plug the device into a USB port while holding the boot button. It will show up as a removable media device named RPI-RP2.
 
-3. Install CircutlPython on the Pico or Pico W
+3. Install CircuitPython on the Pico or Pico W
 
 If using a Pico board:
 
-Copy the adafruit-circuitpython-raspberry_pi_pico-en_US-8.0.0.uf2 file to the root of the Pico (RPI-RP2). The device will reboot and after a second or so, it will reconnect as CIRCUITPY.
+Copy the adafruit-circuitpython-raspberry_pi_pico-en_US-8.2.9.uf2 file to the root of the Pico (RPI-RP2). The device will reboot and after a second or so, it will reconnect as CIRCUITPY.
 
 If using a Pico W board:
 
-Copy the adafruit-circuitpython-raspberry_pi_pico_w-en_US-8.0.0.uf2 file to the root of the Pico (RPI-RP2). The device will reboot and after a second or so, it will reconnect as CIRCUITPY.
+Copy the adafruit-circuitpython-raspberry_pi_pico_w-en_US-8.2.9.uf2 file to the root of the Pico (RPI-RP2). The device will reboot and after a second or so, it will reconnect as CIRCUITPY.
 
 4. Copy the lib folder to the root of the CIRCUITPY
 
@@ -42,7 +40,7 @@ Copy the adafruit-circuitpython-raspberry_pi_pico_w-en_US-8.0.0.uf2 file to the 
 
 6. Follow the instructions in README.md to enter setup mode
 
-7. Copy your payload as payload.dd to the root of the CIRCUITPY
+7. Copy your payload as payload.dd to the root of the CIRCUITPY(Feel free to modify it in any matter)
 
 8. Unplug the device from the USB port and remove the setup jumper.
 
