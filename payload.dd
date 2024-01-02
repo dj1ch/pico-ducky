@@ -1,22 +1,6 @@
 REM The next four lines open Notepad in Windows and type "Hello World!"
 GUI r
-DELAY 250
 STRING notepad
-DELAY 250
 ENTER
 DELAY 250
 STRING Hello World!
-DELAY 250
-STRING Moving the mouse left!
-DELAY 250
-ENTER
-DELAY 250
-MOUSE MOVE -100 0
-DELAY 250
-MOUSE MOVE 100 0
-DELAY 250
-CLICK
-DELAY 250
-STRING We just moved the mouse!
-DELAY 250
-ALT F4
