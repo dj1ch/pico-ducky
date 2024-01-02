@@ -1,7 +1,0 @@
-REM This is a payload tester
-REM whatever you put in here will be executed
-REM on your own computer!
-
-MOUSE MOVE 100 100
-
-REM Make sure you uncomment the function that runs this script!

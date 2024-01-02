@@ -325,23 +325,6 @@ async def monitor_buttons(button1):
 
         await asyncio.sleep(0)
 
-# this is already known to work, 
-# although the mouse movement issue may lie 
-# in the implementation of the move command here 
-# vs how it is implemented in the duckyinpython.py on the usb rubber ducky
-def testMouseCommands():
-    # test mouse movement
-    move_command = {'action': 'MOVE', 'x': 100, 'y': 50,}
-    print("Testing 'MOUSE MOVE' command:")
-    runMouseCommand(move_command)
-    print("Finished!")
-
-    # test clicking
-    click_command = {'action': 'RIGHT_CLICK'}
-    print("Testing 'MOUSE CLICK' command:")
-    runMouseCommand(click_command)
-    print("Finished!")
-
 def testPayloadExecution(layout):
     # define a ducky script string for testing
     ducky_script = """MOUSE MOVE 100 100"""
@@ -349,6 +332,6 @@ def testPayloadExecution(layout):
     for line in ducky_script.splitlines():
         parseLine(line)
 
-# uncomment to run these tests
+# uncomment to run these tests(if commented)
 testPayloadExecution(layout)
 
